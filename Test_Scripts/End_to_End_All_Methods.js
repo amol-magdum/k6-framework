@@ -1,0 +1,186 @@
+'strict mode';
+/***************************************************************
+
+ GET, POST, PUT and DELETE methods 
+
+ Command : k6 run --vus 1 --iterations 1  .\End_to_End_All_Methods.js -e env=test_env -e debug=true -e targetRate=1 -e duration1=1s -e duration2=1s --http-debug="full"
+
+****************************************************************/
+import http from 'k6/http';
+import { check, sleep, group } from 'k6';
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+import { passrate } from '../Helper/api.js';
+import { thresholdsConfig } from '../options/thresholds.js';
+import { scenariosConfig } from '../options/scenario.js';
+import { SharedArray } from 'k6/data';
+import { debugging, logging } from '../helper/common.js';
+import { Trend } from 'k6/metrics';
+
+/**
+ * Passing environment variables to the k6 Script.
+ * In k6, the environment variables are exposed through a global __ENV variable, a JS object.
+ *
+ */
+
+// Logic to pick which configuration to use
+const env = __ENV.url;
+const testType = __ENV.TEST_TYPE || 'load';
+const debug = `${__ENV.debug}`;
+
+const GET_duration = new Trend('Authors_GET_apis_duration');
+const POST_duration = new Trend('Authors_POST_apis_duration');
+const PUT_duration = new Trend('Authors_PUT_apis_duration');
+const DELETE_duration = new Trend('Authors_DELETE_apis_duration');
+
+// retrive data from json file
+const data = new SharedArray('user data', function () {
+  return JSON.parse(open('../test_data/authers.json')).authors;
+});
+
+let url;
+let res;
+
+// 2. Dynamically build the options object
+export const options = {
+  scenarios: scenariosConfig[testType],
+  thresholds: thresholdsConfig[testType],
+};
+
+export default function () {
+  var baseURL;
+
+  // we can setup enviroment
+  if (env == 'test_env') {
+    baseURL = 'https://fakerestapi.azurewebsites.net';
+  } else {
+    baseURL = 'https://fakerestapi.azurewebsites.net';
+  }
+
+  // Common params
+  const params = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Created local variables and assign fetched from external test data.
+  // Make sure all this is in between default function() and also before request body
+  var id = data[__VU - 1].id;
+  var title = data[__VU - 1].title;
+  var idBook = data[__VU - 1].idBook;
+  var firstName = data[__VU - 1].firstName;
+  var lastName = data[__VU - 1].lastName;
+
+  // GET Method,
+  group('GET Method', () => {
+    url = `${baseURL}/api/v1/Authors/authors/books`;
+    res = http.get(`${url}/${idBook}`, params);
+
+    GET_duration.add(res.timings.duration, { name: 'GET request' });
+
+    check(res, {
+      'GET https://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books api status 200':
+        r => r.status === 200,
+    });
+
+    debugging(debug, res);
+    //    logging(res, url);
+    passrate(res, 200);
+    // sleep(1);
+  });
+
+  // POST Method
+  group('POST Method', () => {
+    const authorPostBody = JSON.stringify({
+      id: `${id}`,
+      title: `${title}`,
+      idBook: `${idBook}`,
+      firstName: `${firstName}`,
+      lastName: `${lastName}`,
+    });
+
+    url = `${baseURL}/api/v1/Authors`;
+    res = http.post(url, authorPostBody, params);
+
+    let Book_id = JSON.parse(res.body).idBook;
+    let first_Name = JSON.parse(res.body).firstName;
+    let last_Name = JSON.parse(res.body).lastName;
+
+    console.log(
+      `New book id ${Book_id}'s author is ${first_Name} ${last_Name}`,
+    );
+
+    POST_duration.add(res.timings.duration, { name: 'POST request' });
+
+    check(res, {
+      'POST https://fakerestapi.azurewebsites.net/api/v1/Authors is status 200':
+        r => r.status === 200,
+    });
+
+    // debugging(debug, res);
+    //    logging(res, url);
+    passrate(res, 200);
+    // sleep(1);
+  });
+
+  // PUT Method
+  group('PUT Method', () => {
+    const authorPutBody = JSON.stringify({
+      id: `${id}`,
+      title: 'Do Epic Shit',
+      idBook: 2,
+      firstName: 'Ankur',
+      lastName: 'Warikoo',
+    });
+
+    console.log(authorPutBody);
+
+    //Put method
+    url = `${baseURL}/api/v1/Authors`;
+    res = http.put(`${url}/${id}`, authorPutBody, params);
+
+    let Book_id = JSON.parse(res.body).idBook;
+    let first_Name = JSON.parse(res.body).firstName;
+    let last_Name = JSON.parse(res.body).lastName;
+
+    console.log(
+      `Updated author of id ${Book_id}'s author is ${first_Name} ${last_Name}`,
+    );
+
+    PUT_duration.add(res.timings.duration, { name: 'PUT request' });
+
+    check(res, {
+      'PUT https://fakerestapi.azurewebsites.net/api/v1/Authors is status 200':
+        r => r.status === 200,
+    });
+
+    // debugging(debug, res);
+    //    logging(res, url);
+    passrate(res, 200);
+    // sleep(1);
+  });
+
+  // DELETE Method
+  group('DELETE Method', () => {
+    url = `${baseURL}/api/v1/Authors`;
+    res = http.del(`${url}/${idBook}`, params);
+
+    DELETE_duration.add(res.timings.duration, { name: 'DELETE request' });
+
+    check(res, {
+      'DELETE https://fakerestapi.azurewebsites.net/api/v1/Authors/1 api status 200':
+        r => r.status === 200,
+    });
+
+    // debugging(debug, res);
+    //    logging(res, url);
+    passrate(res, 200);
+  });
+}
+
+export function handleSummary(data) {
+  return {
+    stdout: textSummary(data, { indent: ' ', enableColors: true }),
+    './test_results/End_to_End_All_Methods.json': JSON.stringify(data),
+  };
+}
