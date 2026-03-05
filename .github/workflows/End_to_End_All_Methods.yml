@@ -1,0 +1,35 @@
+name: Manual k6 Performance Test
+
+on:
+  workflow_dispatch: # This enables the "Run workflow" button
+    inputs:
+      env_type:
+        description: 'Select Environment'
+        required: true
+        default: 'perf'
+        type: choice
+        options:
+          - dev
+          - qa
+          - perf
+
+jobs:
+  k6_manual_run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run k6 test
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: Test_Scripts/End_to_End_All_Methods.js
+          # Access the UI selection using github.event.inputs
+          flags: --env env_type=${{ github.event.inputs.env_type }} --experimental-web-dashboard=export=report.html
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-manual-report-${{ github.event.inputs.env_type }}
+          path: report.html
