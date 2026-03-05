@@ -1,0 +1,18 @@
+{
+  "authors": [
+    {
+      "id": 1,
+      "title": "Automic Habits",
+      "idBook": 1,
+      "firstName": "James",
+      "lastName": "Clear"
+    },
+    {
+      "id": 2,
+      "title": "IKIGAI",
+      "idBook": 2,
+      "firstName": "Hector",
+      "lastName": "Garcia"
+    }
+  ]
+}
