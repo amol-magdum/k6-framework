@@ -1,4 +1,4 @@
-name: smoke test
+name: execution
 
 on:
   workflow_dispatch: # This enables the "Run workflow" button
