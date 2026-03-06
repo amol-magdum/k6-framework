@@ -1,0 +1,38 @@
+name: smoke test
+
+on:
+  workflow_dispatch: # This enables the "Run workflow" button
+    inputs:
+      env_type:
+        description: 'Select Environment'
+        required: true
+        default: 'perf'
+        type: choice
+        options:
+          - dev
+          - qa
+          - perf
+      test_type:
+        description: 'Select Test Type'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - load
+          - stress
+          - vu1d5m
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/k6-action@v0.3.1
+        with:
+          filename: ./test_scripts/End_to_End_All_Methods.js
+          flags: --env env=${{ inputs.env_type }} --env TEST_TYPE=${{ inputs.test_type }}
+        env:
+          K6_WEB_DASHBOARD: true
+          K6_WEB_DASHBOARD_PERIOD: 1s
+          K6_WEB_DASHBOARD_EXPORT: ./results/End_to_End_All_Methods.html
