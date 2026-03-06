@@ -1,4 +1,4 @@
-name: K6 Performance Test
+name: smoke test
 
 on:
   workflow_dispatch: # This enables the "Run workflow" button
