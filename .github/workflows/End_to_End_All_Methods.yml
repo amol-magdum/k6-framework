@@ -29,4 +29,4 @@ jobs:
         with:
           filename: Test_Scripts/End_to_End_All_Methods.js
           # Access the UI selection using github.event.inputs
-          flags: --env env_type=${{ github.event.inputs.env_type }} --experimental-web-dashboard=export=report.html
+          flags: --env K6_WEB_DASHBOARD=true
