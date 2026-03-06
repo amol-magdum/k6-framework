@@ -9,7 +9,7 @@
 import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
-import { passrate } from '../Helper/api.js';
+import { passrate } from '../helper/api.js';
 import { thresholdsConfig } from '../options/thresholds.js';
 import { scenariosConfig } from '../options/scenario.js';
 import { SharedArray } from 'k6/data';

@@ -30,4 +30,11 @@ export const scenariosConfig = {
       preAllocatedVUs: 50,
     },
   },
+  vu1d5m: {
+    vu_1_duration_5m: {
+      executor: 'constant-vus',
+      vus: 1,
+      duration: '5m',
+    },
+  },
 };

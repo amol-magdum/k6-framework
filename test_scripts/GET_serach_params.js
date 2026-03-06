@@ -1,26 +1,29 @@
 'strict mode';
 /***************************************************************
 
-POST method 
+ GET method with searchparams is used in the following :
 
-k6 run -e TEST_TYPE=smoke .\Test_Scripts\POST_Respose_test.js
+ Command : k6 run --vus 1 --iterations 1 .\GET_with_serach_params.js -e env=test_env -e debug=true -e targetRate=1 -e duration1=1s -e duration2=1s --http-debug="full" --log-format raw
+
 ****************************************************************/
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
-import { passrate } from '../Helper/api.js';
+import { passrate } from '../helper/api.js';
 import { thresholdsConfig } from '../options/thresholds.js';
 import { scenariosConfig } from '../options/scenario.js';
 import { SharedArray } from 'k6/data';
 import { debugging, logging } from '../helper/common.js';
 import { Trend } from 'k6/metrics';
 
-const post_responce = new Trend('post_responce');
+const get_search_param = new Trend('get_search_param');
+
 // Logic to pick which configuration to use
 const env = __ENV.url;
 const testType = __ENV.TEST_TYPE || 'load';
 const debug = `${__ENV.debug}`;
 
+// retrive data from json file
 const data = new SharedArray('user data', function () {
   return JSON.parse(open('../test_data/authers.json')).authors;
 });
@@ -32,54 +35,36 @@ export const options = {
 };
 
 export default function () {
-  var baseURL = 'https://fakerestapi.azurewebsites.net';
-
-  const authorsParams = {
+  const params = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
-  var id = data[__VU - 1].id;
-  var title = data[__VU - 1].title;
-  var idBook = data[__VU - 1].idBook;
-  var firstName = data[__VU - 1].firstName;
-  var lastName = data[__VU - 1].lastName;
+  let idBook = data[__VU - 1].idBook;
 
-  const authorPostBody = JSON.stringify({
-    id: `${id}`,
-    title: `${title}`,
-    idBook: `${idBook}`,
-    firstName: `${firstName}`,
-    lastName: `${lastName}`,
-  });
+  //GET url
 
-  console.log(authorPostBody);
-  //Post method
+  let url =
+    'https://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books';
+  let res = http.get(`${url}/${idBook}`, params);
 
-  let url = `${baseURL}/api/v1/Authors`;
-  let res = http.post(url, authorPostBody, authorsParams);
-  post_responce.add(res.timings.duration);
+  get_search_param.add(res.timings.duration);
 
-  let Book_id = JSON.parse(res.body).idBook;
-
-  let first_Name = JSON.parse(res.body).firstName;
-  let last_Name = JSON.parse(res.body).lastName;
-
-  console.log(`New book id ${Book_id}'s author is ${first_Name} ${last_Name}`);
-
+  // checks
   check(res, {
-    'POST https://fakerestapi.azurewebsites.net/api/v1/Authors is status 200':
+    'GET https://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books api status 200':
       r => r.status === 200,
   });
 
   debugging(debug, res);
   passrate(res, 200);
+  // sleep(1);
 }
 
 export function handleSummary(data) {
   return {
     stdout: textSummary(data, { indent: ' ', enableColors: true }),
-    './test_results/POST_Respose_test.json': JSON.stringify(data),
+    './test_results/GET_serach_params.json': JSON.stringify(data),
   };
 }

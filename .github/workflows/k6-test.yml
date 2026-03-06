@@ -1,0 +1,26 @@
+name: K6 Performance Test
+
+on:
+  workflow_dispatch: # This enables the "Run workflow" button
+    inputs:
+      env_type:
+        description: 'Select Environment'
+        required: true
+        default: 'perf'
+        type: choice
+        options:
+          - dev
+          - qa
+          - perf
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/k6-action@v1
+        with:
+          filename: ./test_scripts/End_to_End_All_Methods.js
+          flags: --env env=perf --env TEST_TYPE=smoke
+        env:
+          K6_WEB_DASHBOARD: true
