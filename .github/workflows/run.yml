@@ -36,3 +36,8 @@ jobs:
           K6_WEB_DASHBOARD: true
           K6_WEB_DASHBOARD_PERIOD: 1s
           K6_WEB_DASHBOARD_EXPORT: ./results/End_to_End_All_Methods.html
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-report
+          path: End_to_End_All_Methods.html
