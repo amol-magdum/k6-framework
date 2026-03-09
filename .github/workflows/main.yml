@@ -42,7 +42,10 @@ jobs:
           
           echo "### 🚀 Live k6 Dashboard" >> $GITHUB_STEP_SUMMARY
           echo "Access your live metrics here: $DASHBOARD_URL" >> $GITHUB_STEP_SUMMARY
-
+  
+      - name: Setup K6
+        uses: grafana/setup-k6-action@v1
+        
       - name: Run k6 script
         uses: grafana/k6-action@v1
         with:
