@@ -1,5 +1,0 @@
-Timestamp, Scenario, metric, 200, 400, 500, min, med, max, avg, p(90), p(95), Iterations, Calls Per Min, executionType, 
-20260303_0732, End_to_End_All_Methods, Authors_DELETE_apis_duration, 4, 0, 0, 280.4835,280.4835,280.4835,280.4835,280.4835,280.4835,1,NaN, undefined, 
-20260303_0732, End_to_End_All_Methods, Authors_GET_apis_duration, 4, 0, 0, 191.3754,191.3754,191.3754,191.3754,191.3754,191.3754,1,NaN, undefined, 
-20260303_0732, End_to_End_All_Methods, Authors_POST_apis_duration, 4, 0, 0, 203.3051,203.3051,203.3051,203.3051,203.3051,203.3051,1,NaN, undefined, 
-20260303_0732, End_to_End_All_Methods, Authors_PUT_apis_duration, 4, 0, 0, 203.4973,203.4973,203.4973,203.4973,203.4973,203.4973,1,NaN, undefined, 
