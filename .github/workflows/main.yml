@@ -46,20 +46,17 @@ jobs:
       - name: Setup K6
         uses: grafana/setup-k6-action@v1.1.0
         
-      - name: Run k6 script
-        uses: grafana/setup-k6-action@v1.1.0
-        with:
-          filename: ./test_scripts/End_to_End_All_Methods.js
-          flags: >
-            --env env=${{ inputs.env_type }} 
-            --env TEST_TYPE=${{ inputs.test_type }}
+# 4. RUN k6 (This is where filename and flags go)
+      - name: Execute k6 Test
         env:
-          # Crucial settings to prevent 502 errors and ensure connectivity
           K6_WEB_DASHBOARD: true
           K6_WEB_DASHBOARD_PORT: 5665
-          K6_WEB_DASHBOARD_HOST: 0.0.0.0 
-          K6_WEB_DASHBOARD_PERIOD: 1s
-          K6_WEB_DASHBOARD_EXPORT: End_to_End_All_Methods.html
+          K6_WEB_DASHBOARD_HOST: 0.0.0.0
+          K6_WEB_DASHBOARD_EXPORT: report.html
+        run: |
+          k6 run ./test_scripts/End_to_End_All_Methods.js \
+            --env env=${{ inputs.env_type }} \
+            --env TEST_TYPE=${{ inputs.test_type }}
 
       - name: Upload Report
         if: always()
