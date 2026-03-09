@@ -1,46 +1,69 @@
 name: execution with dashboard
 
 on:
-  workflow_dispatch: # This enables the "Run workflow" button
+  workflow_dispatch:
     inputs:
       env_type:
         description: 'Select Environment'
         required: true
         default: 'perf'
         type: choice
-        options:
-          - dev
-          - qa
-          - perf
+        options: [dev, qa, perf]
       test_type:
         description: 'Select Test Type'
         required: true
         default: 'smoke'
         type: choice
-        options:
-          - smoke
-          - load
-          - stress
-          - vu1d5m
+        options: [smoke, load, stress, vu1d5m]
 
 jobs:
   k6-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install k6
+        run: |
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E34671
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
       - name: Install Cloudflared
-        run: curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb
-      - name: Run k6 script
-        uses: grafana/k6-action@v0.3.1
-        with:
-          filename: ./test_scripts/End_to_End_All_Methods.js
-          flags: --env env=${{ inputs.env_type }} --env TEST_TYPE=${{ inputs.test_type }}
+        run: |
+          curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+          sudo dpkg -i cloudflared.deb
+
+      - name: Run k6 with Live Dashboard Tunnel
+        shell: bash
         env:
           K6_WEB_DASHBOARD: true
           K6_WEB_DASHBOARD_PERIOD: 1s
-          K6_WEB_DASHBOARD_EXPORT: ./results/End_to_End_All_Methods.html
+          # We save the report to the current directory for easy upload later
+          K6_WEB_DASHBOARD_EXPORT: report.html 
+        run: |
+          # 1. Start tunnel in background
+          cloudflared tunnel --url http://localhost:5665 > tunnel.log 2>&1 &
+          
+          # 2. Wait for Cloudflare to generate the URL
+          sleep 10
+          
+          # 3. Print the Live URL to the console
+          echo " "
+          echo "================================================================"
+          echo "🚀 LIVE DASHBOARD URL:"
+          grep -o 'https://.*\.trycloudflare\.com' tunnel.log || echo "Tunnel URL not found yet, check tunnel.log"
+          echo "================================================================"
+          echo " "
+
+          # 4. Run k6 directly
+          k6 run ./test_scripts/End_to_End_All_Methods.js \
+            --env env=${{ inputs.env_type }} \
+            --env TEST_TYPE=${{ inputs.test_type }}
+
       - name: Upload Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: k6-report
-          path: End_to_End_All_Methods.html
+          path: report.html
