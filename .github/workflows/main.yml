@@ -44,10 +44,10 @@ jobs:
           echo "Access your live metrics here: $DASHBOARD_URL" >> $GITHUB_STEP_SUMMARY
   
       - name: Setup K6
-        uses: grafana/setup-k6-action@v1
+        uses: grafana/setup-k6-action@v1.1.0
         
       - name: Run k6 script
-        uses: grafana/k6-action@v1
+        uses: grafana/setup-k6-action@v1.1.0
         with:
           filename: ./test_scripts/End_to_End_All_Methods.js
           flags: >
