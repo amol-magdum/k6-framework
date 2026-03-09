@@ -30,33 +30,33 @@ jobs:
       - name: Start Live Dashboard Tunnel
         shell: bash
         run: |
-          # Start tunnel in background
+          # Start tunnel in background pointing to k6's default port
           cloudflared tunnel --url http://localhost:5665 > tunnel.log 2>&1 &
           
           # Wait for Cloudflare to generate the URL
           sleep 10
           
-          # Extract the URL and print it to the logs
-          echo "------------------------------------------------------------"
-          echo "🚀 LIVE DASHBOARD URL:"
-          grep -o 'https://.*\.trycloudflare\.com' tunnel.log || echo "URL not ready yet."
-          echo "------------------------------------------------------------"
+          # Export the URL for the summary and for our records
+          DASHBOARD_URL=$(grep -o 'https://.*\.trycloudflare\.com' tunnel.log | tail -n1)
+          echo "DASHBOARD_URL=$DASHBOARD_URL" >> $GITHUB_ENV
           
-          # Crucial: Write the URL to the GitHub Step Summary so it's easy to find
           echo "### 🚀 Live k6 Dashboard" >> $GITHUB_STEP_SUMMARY
-          echo "Click here to view: $(grep -o 'https://.*\.trycloudflare\.com' tunnel.log)" >> $GITHUB_STEP_SUMMARY
+          echo "Access your live metrics here: $DASHBOARD_URL" >> $GITHUB_STEP_SUMMARY
 
       - name: Run k6 script
         uses: grafana/k6-action@v0.3.1
         with:
+          k6-version: '0.51.0' # Ensures compatibility with the Web Dashboard
           filename: ./test_scripts/End_to_End_All_Methods.js
-          flags: --env env=${{ inputs.env_type }} --env TEST_TYPE=${{ inputs.test_type }}
+          flags: >
+            --env env=${{ inputs.env_type }} 
+            --env TEST_TYPE=${{ inputs.test_type }}
         env:
+          # Crucial settings to prevent 502 errors and ensure connectivity
           K6_WEB_DASHBOARD: true
-          K6_WEB_DASHBOARD_HOST: 0.0.0.0
           K6_WEB_DASHBOARD_PORT: 5665
+          K6_WEB_DASHBOARD_HOST: 0.0.0.0 
           K6_WEB_DASHBOARD_PERIOD: 1s
-          # Save export to current dir for easy artifact upload
           K6_WEB_DASHBOARD_EXPORT: End_to_End_All_Methods.html
 
       - name: Upload Report
@@ -65,3 +65,7 @@ jobs:
         with:
           name: k6-report
           path: End_to_End_All_Methods.html
+
+      - name: Debug Tunnel
+        if: failure()
+        run: cat tunnel.log
