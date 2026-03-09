@@ -44,9 +44,8 @@ jobs:
           echo "Access your live metrics here: $DASHBOARD_URL" >> $GITHUB_STEP_SUMMARY
 
       - name: Run k6 script
-        uses: grafana/k6-action@v0.3.1
+        uses: grafana/k6-action@v1
         with:
-          k6-version: '0.51.0' # Ensures compatibility with the Web Dashboard
           filename: ./test_scripts/End_to_End_All_Methods.js
           flags: >
             --env env=${{ inputs.env_type }} 
