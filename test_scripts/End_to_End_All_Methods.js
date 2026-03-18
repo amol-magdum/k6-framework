@@ -3,7 +3,17 @@
 
  GET, POST, PUT and DELETE methods 
 
- Command : k6 run --vus 1 --iterations 1  .\End_to_End_All_Methods.js -e env=test_env -e debug=true -e targetRate=1 -e duration1=1s -e duration2=1s --http-debug="full"
+ Command : 
+powershell windows: $env:K6_WEB_DASHBOARD="true";$env:K6_WEB_DASHBOARD_PERIOD=3s;$env:K6_WEB_DASHBOARD_EXPORT='./test_results/End_to_End_All_Methods.html'; k6 run -e env=perf -e TEST_TYPE=vu1d5m .\Test_Scripts\End_to_End_All_Methods.js
+linux: K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_HOST=localhost K6_WEB_DASHBOARD_PORT=4032 K6_WEB_DASHBOARD_PERIOD=1s K6_WEB_DASHBOARD_EXPORT=./End_to_End_All_Methods.html k6 run -e env=perf -e TEST_TYPE=vu1d5m .\Test_Scripts\End_to_End_All_Methods.js
+
+ K6_WEB_DASHBOARD=true k6 run -e env=perf -e TEST_TYPE=vu1d5m ./test_scripts/End_to_End_All_Methods.js
+
+localhost default: http://localhost:5665
+if port changed: http://localhost:4032
+
+
+$env:K6_WEB_DASHBOARD="true";$env:K6_WEB_DASHBOARD_PERIOD='3s';$env:K6_WEB_DASHBOARD_EXPORT='./test_results/End_to_End_All_Methods.html'; k6 cloud run -e env=perf -e TEST_TYPE=stress .\Test_Scripts\End_to_End_All_Methods.js
 
 ****************************************************************/
 import http from 'k6/http';
@@ -12,9 +22,15 @@ import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { passrate } from '../helper/api.js';
 import { thresholdsConfig } from '../options/thresholds.js';
 import { scenariosConfig } from '../options/scenario.js';
+import { cloud } from '../options/distribution.js';
 import { SharedArray } from 'k6/data';
-import { debugging, logging } from '../helper/common.js';
+import {
+  debugging,
+  logging,
+  getRandomStringLowerCase,
+} from '../helper/common.js';
 import { Trend } from 'k6/metrics';
+import { environments } from '../helper/config.js';
 
 /**
  * Passing environment variables to the k6 Script.
@@ -23,10 +39,11 @@ import { Trend } from 'k6/metrics';
  */
 
 // Logic to pick which configuration to use
-const env = __ENV.url;
+const env = __ENV.env || 'perf';
 const testType = __ENV.TEST_TYPE || 'load';
 const debug = `${__ENV.debug}`;
 
+/// custom metrics for individual API
 const GET_duration = new Trend('Authors_GET_apis_duration');
 const POST_duration = new Trend('Authors_POST_apis_duration');
 const PUT_duration = new Trend('Authors_PUT_apis_duration');
@@ -37,25 +54,19 @@ const data = new SharedArray('user data', function () {
   return JSON.parse(open('../test_data/authers.json')).authors;
 });
 
-let url;
-let res;
+//Select the config based on the envType
+const currentConfig = environments[env];
 
 // 2. Dynamically build the options object
 export const options = {
+  cloud: cloud,
   scenarios: scenariosConfig[testType],
   thresholds: thresholdsConfig[testType],
 };
 
+let url;
+let res;
 export default function () {
-  var baseURL;
-
-  // we can setup enviroment
-  if (env == 'test_env') {
-    baseURL = 'https://fakerestapi.azurewebsites.net';
-  } else {
-    baseURL = 'https://fakerestapi.azurewebsites.net';
-  }
-
   // Common params
   const params = {
     headers: {
@@ -73,7 +84,7 @@ export default function () {
 
   // GET Method,
   group('GET Method', () => {
-    url = `${baseURL}/api/v1/Authors/authors/books`;
+    url = `${currentConfig.baseUrl}/api/v1/Authors/authors/books`;
     res = http.get(`${url}/${idBook}`, params);
 
     GET_duration.add(res.timings.duration, { name: 'GET request' });
@@ -99,16 +110,16 @@ export default function () {
       lastName: `${lastName}`,
     });
 
-    url = `${baseURL}/api/v1/Authors`;
+    url = `${currentConfig.baseUrl}/api/v1/Authors`;
     res = http.post(url, authorPostBody, params);
 
     let Book_id = JSON.parse(res.body).idBook;
     let first_Name = JSON.parse(res.body).firstName;
     let last_Name = JSON.parse(res.body).lastName;
 
-    console.log(
-      `New book id ${Book_id}'s author is ${first_Name} ${last_Name}`,
-    );
+    // console.log(
+    //   `New book id ${Book_id}'s author is ${first_Name} ${last_Name}`,
+    // );
 
     POST_duration.add(res.timings.duration, { name: 'POST request' });
 
@@ -127,25 +138,25 @@ export default function () {
   group('PUT Method', () => {
     const authorPutBody = JSON.stringify({
       id: `${id}`,
-      title: 'Do Epic Shit',
-      idBook: 2,
-      firstName: 'Ankur',
-      lastName: 'Warikoo',
+      title: `${title}_updated_${getRandomStringLowerCase(5)}`,
+      idBook: `${idBook}`,
+      firstName: `${firstName}_updated_${getRandomStringLowerCase(5)}`,
+      lastName: `${lastName}_updated_${getRandomStringLowerCase(5)}`,
     });
 
-    console.log(authorPutBody);
+    // console.log(authorPutBody);
 
     //Put method
-    url = `${baseURL}/api/v1/Authors`;
+    url = `${currentConfig.baseUrl}/api/v1/Authors`;
     res = http.put(`${url}/${id}`, authorPutBody, params);
 
     let Book_id = JSON.parse(res.body).idBook;
     let first_Name = JSON.parse(res.body).firstName;
     let last_Name = JSON.parse(res.body).lastName;
 
-    console.log(
-      `Updated author of id ${Book_id}'s author is ${first_Name} ${last_Name}`,
-    );
+    // console.log(
+    //   `Updated author of id ${Book_id}'s author is ${first_Name} ${last_Name}`,
+    // );
 
     PUT_duration.add(res.timings.duration, { name: 'PUT request' });
 
@@ -162,7 +173,7 @@ export default function () {
 
   // DELETE Method
   group('DELETE Method', () => {
-    url = `${baseURL}/api/v1/Authors`;
+    url = `${currentConfig.baseUrl}/api/v1/Authors`;
     res = http.del(`${url}/${idBook}`, params);
 
     DELETE_duration.add(res.timings.duration, { name: 'DELETE request' });

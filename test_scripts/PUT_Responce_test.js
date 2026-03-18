@@ -3,7 +3,7 @@
 
 PUT method 
 
-k6 run -e TEST_TYPE=smoke .\Test_Scripts\PUT_Responce_test.js
+k6 run env=perf -e TEST_TYPE=smoke .\Test_Scripts\PUT_Responce_test.js
 ****************************************************************/
 import http from 'k6/http';
 import { check, sleep } from 'k6';
@@ -14,11 +14,12 @@ import { scenariosConfig } from '../options/scenario.js';
 import { SharedArray } from 'k6/data';
 import { Trend } from 'k6/metrics';
 import { debugging, logging } from '../helper/common.js';
+import { environments } from '../helper/config.js';
 
 const put_responce = new Trend('put_responce');
 
 // Logic to pick which configuration to use
-const env = __ENV.url;
+const env = __ENV.env || 'perf';
 const testType = __ENV.TEST_TYPE || 'load';
 const debug = `${__ENV.debug}`;
 
@@ -26,7 +27,10 @@ const data = new SharedArray('user data', function () {
   return JSON.parse(open('../test_data/authers.json')).authors;
 });
 
-// 2. Dynamically build the options object
+// Select the config based on the envType
+const currentConfig = environments[env];
+
+// Dynamically build the options object
 export const options = {
   scenarios: scenariosConfig[testType],
   thresholds: thresholdsConfig[testType],
@@ -36,7 +40,7 @@ export default function () {
   var baseURL;
 
   // we can setup enviroment
-  baseURL = 'https://fakerestapi.azurewebsites.net';
+  baseURL = `${currentConfig.baseUrl}`;
 
   const authorsParams = {
     headers: {
@@ -60,7 +64,7 @@ export default function () {
   console.log(authorPutBody);
 
   //Put method
-  let updateAuthor = `${baseURL}/api/v1/Authors`;
+  let updateAuthor = `${currentConfig.baseUrl}/api/v1/Authors`;
   let res = http.put(`${updateAuthor}/${id}`, authorPutBody, authorsParams);
 
   put_responce.add(res.timings.duration);

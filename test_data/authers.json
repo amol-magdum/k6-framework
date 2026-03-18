@@ -2,7 +2,7 @@
   "authors": [
     {
       "id": 1,
-      "title": "Automic Habits",
+      "title": "Atomic Habits",
       "idBook": 1,
       "firstName": "James",
       "lastName": "Clear"
@@ -13,6 +13,706 @@
       "idBook": 2,
       "firstName": "Hector",
       "lastName": "Garcia"
+    },
+    {
+      "id": 3,
+      "title": "The Psychology of Money",
+      "idBook": 3,
+      "firstName": "Morgan",
+      "lastName": "Housel"
+    },
+    {
+      "id": 4,
+      "title": "Deep Work",
+      "idBook": 4,
+      "firstName": "Cal",
+      "lastName": "Newport"
+    },
+    {
+      "id": 5,
+      "title": "The Alchemist",
+      "idBook": 5,
+      "firstName": "Paulo",
+      "lastName": "Coelho"
+    },
+    {
+      "id": 6,
+      "title": "Sapiens",
+      "idBook": 6,
+      "firstName": "Yuval",
+      "lastName": "Harari"
+    },
+    {
+      "id": 7,
+      "title": "Thinking, Fast and Slow",
+      "idBook": 7,
+      "firstName": "Daniel",
+      "lastName": "Kahneman"
+    },
+    {
+      "id": 8,
+      "title": "Clean Code",
+      "idBook": 8,
+      "firstName": "Robert",
+      "lastName": "Martin"
+    },
+    {
+      "id": 9,
+      "title": "The Phoenix Project",
+      "idBook": 9,
+      "firstName": "Gene",
+      "lastName": "Kim"
+    },
+    {
+      "id": 10,
+      "title": "Start with Why",
+      "idBook": 10,
+      "firstName": "Simon",
+      "lastName": "Sinek"
+    },
+    {
+      "id": 11,
+      "title": "The Subtle Art of Not Giving a F*ck",
+      "idBook": 11,
+      "firstName": "Mark",
+      "lastName": "Manson"
+    },
+    {
+      "id": 12,
+      "title": "Man's Search for Meaning",
+      "idBook": 12,
+      "firstName": "Viktor",
+      "lastName": "Frankl"
+    },
+    {
+      "id": 13,
+      "title": "Never Split the Difference",
+      "idBook": 13,
+      "firstName": "Chris",
+      "lastName": "Voss"
+    },
+    {
+      "id": 14,
+      "title": "The 5 AM Club",
+      "idBook": 14,
+      "firstName": "Robin",
+      "lastName": "Sharma"
+    },
+    {
+      "id": 15,
+      "title": "Grit",
+      "idBook": 15,
+      "firstName": "Angela",
+      "lastName": "Duckworth"
+    },
+    {
+      "id": 16,
+      "title": "Dune",
+      "idBook": 16,
+      "firstName": "Frank",
+      "lastName": "Herbert"
+    },
+    {
+      "id": 17,
+      "title": "Foundation",
+      "idBook": 17,
+      "firstName": "Isaac",
+      "lastName": "Asimov"
+    },
+    {
+      "id": 18,
+      "title": "Brave New World",
+      "idBook": 18,
+      "firstName": "Aldous",
+      "lastName": "Huxley"
+    },
+    {
+      "id": 19,
+      "title": "1984",
+      "idBook": 19,
+      "firstName": "George",
+      "lastName": "Orwell"
+    },
+    {
+      "id": 20,
+      "title": "The Great Gatsby",
+      "idBook": 20,
+      "firstName": "F. Scott",
+      "lastName": "Fitzgerald"
+    },
+    {
+      "id": 21,
+      "title": "Project Hail Mary",
+      "idBook": 21,
+      "firstName": "Andy",
+      "lastName": "Weir"
+    },
+    {
+      "id": 22,
+      "title": "The Martian",
+      "idBook": 22,
+      "firstName": "Andy",
+      "lastName": "Weir"
+    },
+    {
+      "id": 23,
+      "title": "Seveneves",
+      "idBook": 23,
+      "firstName": "Neal",
+      "lastName": "Stephenson"
+    },
+    {
+      "id": 24,
+      "title": "Snow Crash",
+      "idBook": 24,
+      "firstName": "Neal",
+      "lastName": "Stephenson"
+    },
+    {
+      "id": 25,
+      "title": "Neuromancer",
+      "idBook": 25,
+      "firstName": "William",
+      "lastName": "Gibson"
+    },
+    {
+      "id": 26,
+      "title": "Hyperion",
+      "idBook": 26,
+      "firstName": "Dan",
+      "lastName": "Simmons"
+    },
+    {
+      "id": 27,
+      "title": "The Lean Startup",
+      "idBook": 27,
+      "firstName": "Eric",
+      "lastName": "Ries"
+    },
+    {
+      "id": 28,
+      "title": "Zero to One",
+      "idBook": 28,
+      "firstName": "Peter",
+      "lastName": "Thiel"
+    },
+    {
+      "id": 29,
+      "title": "The Hard Thing About Hard Things",
+      "idBook": 29,
+      "firstName": "Ben",
+      "lastName": "Horowitz"
+    },
+    {
+      "id": 30,
+      "title": "Measure What Matters",
+      "idBook": 30,
+      "firstName": "John",
+      "lastName": "Doerr"
+    },
+    {
+      "id": 31,
+      "title": "Shoe Dog",
+      "idBook": 31,
+      "firstName": "Phil",
+      "lastName": "Knight"
+    },
+    {
+      "id": 32,
+      "title": "Elon Musk",
+      "idBook": 32,
+      "firstName": "Walter",
+      "lastName": "Isaacson"
+    },
+    {
+      "id": 33,
+      "title": "Steve Jobs",
+      "idBook": 33,
+      "firstName": "Walter",
+      "lastName": "Isaacson"
+    },
+    {
+      "id": 34,
+      "title": "The Innovators",
+      "idBook": 34,
+      "firstName": "Walter",
+      "lastName": "Isaacson"
+    },
+    {
+      "id": 35,
+      "title": "Tools of Titans",
+      "idBook": 35,
+      "firstName": "Tim",
+      "lastName": "Ferriss"
+    },
+    {
+      "id": 36,
+      "title": "The 4-Hour Workweek",
+      "idBook": 36,
+      "firstName": "Tim",
+      "lastName": "Ferriss"
+    },
+    {
+      "id": 37,
+      "title": "Principles",
+      "idBook": 37,
+      "firstName": "Ray",
+      "lastName": "Dalio"
+    },
+    {
+      "id": 38,
+      "title": "Extreme Ownership",
+      "idBook": 38,
+      "firstName": "Jocko",
+      "lastName": "Willink"
+    },
+    {
+      "id": 39,
+      "title": "The Daily Stoic",
+      "idBook": 39,
+      "firstName": "Ryan",
+      "lastName": "Holiday"
+    },
+    {
+      "id": 40,
+      "title": "Ego is the Enemy",
+      "idBook": 40,
+      "firstName": "Ryan",
+      "lastName": "Holiday"
+    },
+    {
+      "id": 41,
+      "title": "Stillness is the Key",
+      "idBook": 41,
+      "firstName": "Ryan",
+      "lastName": "Holiday"
+    },
+    {
+      "id": 42,
+      "title": "The Obstacle is the Way",
+      "idBook": 42,
+      "firstName": "Ryan",
+      "lastName": "Holiday"
+    },
+    {
+      "id": 43,
+      "title": "Indistractable",
+      "idBook": 43,
+      "firstName": "Nir",
+      "lastName": "Eyal"
+    },
+    {
+      "id": 44,
+      "title": "Hooked",
+      "idBook": 44,
+      "firstName": "Nir",
+      "lastName": "Eyal"
+    },
+    {
+      "id": 45,
+      "title": "Essentialism",
+      "idBook": 45,
+      "firstName": "Greg",
+      "lastName": "McKeown"
+    },
+    {
+      "id": 46,
+      "title": "Effortless",
+      "idBook": 46,
+      "firstName": "Greg",
+      "lastName": "McKeown"
+    },
+    {
+      "id": 47,
+      "title": "Digital Minimalism",
+      "idBook": 47,
+      "firstName": "Cal",
+      "lastName": "Newport"
+    },
+    {
+      "id": 48,
+      "title": "So Good They Can't Ignore You",
+      "idBook": 48,
+      "firstName": "Cal",
+      "lastName": "Newport"
+    },
+    {
+      "id": 49,
+      "title": "A World Without Email",
+      "idBook": 49,
+      "firstName": "Cal",
+      "lastName": "Newport"
+    },
+    {
+      "id": 50,
+      "title": "The Pragmatic Programmer",
+      "idBook": 50,
+      "firstName": "Andrew",
+      "lastName": "Hunt"
+    },
+    {
+      "id": 51,
+      "title": "Code Complete",
+      "idBook": 51,
+      "firstName": "Steve",
+      "lastName": "McConnell"
+    },
+    {
+      "id": 52,
+      "title": "The Mythical Man-Month",
+      "idBook": 52,
+      "firstName": "Fred",
+      "lastName": "Brooks"
+    },
+    {
+      "id": 53,
+      "title": "Refactoring",
+      "idBook": 53,
+      "firstName": "Martin",
+      "lastName": "Fowler"
+    },
+    {
+      "id": 54,
+      "title": "Domain-Driven Design",
+      "idBook": 54,
+      "firstName": "Eric",
+      "lastName": "Evans"
+    },
+    {
+      "id": 55,
+      "title": "Working Effectively with Legacy Code",
+      "idBook": 55,
+      "firstName": "Michael",
+      "lastName": "Feathers"
+    },
+    {
+      "id": 56,
+      "title": "Continuous Delivery",
+      "idBook": 56,
+      "firstName": "Jez",
+      "lastName": "Humble"
+    },
+    {
+      "id": 57,
+      "title": "Accelerate",
+      "idBook": 57,
+      "firstName": "Nicole",
+      "lastName": "Forsgren"
+    },
+    {
+      "id": 58,
+      "title": "The Unicorn Project",
+      "idBook": 58,
+      "firstName": "Gene",
+      "lastName": "Kim"
+    },
+    {
+      "id": 59,
+      "title": "Site Reliability Engineering",
+      "idBook": 59,
+      "firstName": "Niall",
+      "lastName": "Murphy"
+    },
+    {
+      "id": 60,
+      "title": "Building Microservices",
+      "idBook": 60,
+      "firstName": "Sam",
+      "lastName": "Newman"
+    },
+    {
+      "id": 61,
+      "title": "Kafka: The Definitive Guide",
+      "idBook": 61,
+      "firstName": "Gwen",
+      "lastName": "Shapira"
+    },
+    {
+      "id": 62,
+      "title": "Modern Operating Systems",
+      "idBook": 62,
+      "firstName": "Andrew",
+      "lastName": "Tanenbaum"
+    },
+    {
+      "id": 63,
+      "title": "Compilers: Principles, Techniques, and Tools",
+      "idBook": 63,
+      "firstName": "Alfred",
+      "lastName": "Aho"
+    },
+    {
+      "id": 64,
+      "title": "Introduction to Algorithms",
+      "idBook": 64,
+      "firstName": "Thomas",
+      "lastName": "Cormen"
+    },
+    {
+      "id": 65,
+      "title": "The Art of Computer Programming",
+      "idBook": 65,
+      "firstName": "Donald",
+      "lastName": "Knuth"
+    },
+    {
+      "id": 66,
+      "title": "Structure and Interpretation of Computer Programs",
+      "idBook": 66,
+      "firstName": "Harold",
+      "lastName": "Abelson"
+    },
+    {
+      "id": 67,
+      "title": "Patterns of Enterprise Application Architecture",
+      "idBook": 67,
+      "firstName": "Martin",
+      "lastName": "Fowler"
+    },
+    {
+      "id": 68,
+      "title": "Test Driven Development",
+      "idBook": 68,
+      "firstName": "Kent",
+      "lastName": "Beck"
+    },
+    {
+      "id": 69,
+      "title": "Extreme Programming Explained",
+      "idBook": 69,
+      "firstName": "Kent",
+      "lastName": "Beck"
+    },
+    {
+      "id": 70,
+      "title": "The Clean Coder",
+      "idBook": 70,
+      "firstName": "Robert",
+      "lastName": "Martin"
+    },
+    {
+      "id": 71,
+      "title": "Clean Architecture",
+      "idBook": 71,
+      "firstName": "Robert",
+      "lastName": "Martin"
+    },
+    {
+      "id": 72,
+      "title": "Clean Agile",
+      "idBook": 72,
+      "firstName": "Robert",
+      "lastName": "Martin"
+    },
+    {
+      "id": 73,
+      "title": "Cracking the Coding Interview",
+      "idBook": 73,
+      "firstName": "Gayle",
+      "lastName": "McDowell"
+    },
+    {
+      "id": 74,
+      "title": "Soft Skills",
+      "idBook": 74,
+      "firstName": "John",
+      "lastName": "Sonmez"
+    },
+    {
+      "id": 75,
+      "title": "The Complete Software Developer's Career Guide",
+      "idBook": 75,
+      "firstName": "John",
+      "lastName": "Sonmez"
+    },
+    {
+      "id": 76,
+      "title": "Quiet",
+      "idBook": 76,
+      "firstName": "Susan",
+      "lastName": "Cain"
+    },
+    {
+      "id": 77,
+      "title": "Talking to Strangers",
+      "idBook": 77,
+      "firstName": "Malcolm",
+      "lastName": "Gladwell"
+    },
+    {
+      "id": 78,
+      "title": "Outliers",
+      "idBook": 78,
+      "firstName": "Malcolm",
+      "lastName": "Gladwell"
+    },
+    {
+      "id": 79,
+      "title": "Blink",
+      "idBook": 79,
+      "firstName": "Malcolm",
+      "lastName": "Gladwell"
+    },
+    {
+      "id": 80,
+      "title": "The Tipping Point",
+      "idBook": 80,
+      "firstName": "Malcolm",
+      "lastName": "Gladwell"
+    },
+    {
+      "id": 81,
+      "title": "Range",
+      "idBook": 81,
+      "firstName": "David",
+      "lastName": "Epstein"
+    },
+    {
+      "id": 82,
+      "title": "Rebel Ideas",
+      "idBook": 82,
+      "firstName": "Matthew",
+      "lastName": "Syed"
+    },
+    {
+      "id": 83,
+      "title": "Black Box Thinking",
+      "idBook": 83,
+      "firstName": "Matthew",
+      "lastName": "Syed"
+    },
+    {
+      "id": 84,
+      "title": "Mindset",
+      "idBook": 84,
+      "firstName": "Carol",
+      "lastName": "Dweck"
+    },
+    {
+      "id": 85,
+      "title": "Drive",
+      "idBook": 85,
+      "firstName": "Daniel",
+      "lastName": "Pink"
+    },
+    {
+      "id": 86,
+      "title": "When",
+      "idBook": 86,
+      "firstName": "Daniel",
+      "lastName": "Pink"
+    },
+    {
+      "id": 87,
+      "title": "To Sell Is Human",
+      "idBook": 87,
+      "firstName": "Daniel",
+      "lastName": "Pink"
+    },
+    {
+      "id": 88,
+      "title": "Factfulness",
+      "idBook": 88,
+      "firstName": "Hans",
+      "lastName": "Rosling"
+    },
+    {
+      "id": 89,
+      "title": "Enlightenment Now",
+      "idBook": 89,
+      "firstName": "Steven",
+      "lastName": "Pinker"
+    },
+    {
+      "id": 90,
+      "title": "The Better Angels of Our Nature",
+      "idBook": 90,
+      "firstName": "Steven",
+      "lastName": "Pinker"
+    },
+    {
+      "id": 91,
+      "title": "Rationality",
+      "idBook": 91,
+      "firstName": "Steven",
+      "lastName": "Pinker"
+    },
+    {
+      "id": 92,
+      "title": "The Selfish Gene",
+      "idBook": 92,
+      "firstName": "Richard",
+      "lastName": "Dawkins"
+    },
+    {
+      "id": 93,
+      "title": "The God Delusion",
+      "idBook": 93,
+      "firstName": "Richard",
+      "lastName": "Dawkins"
+    },
+    {
+      "id": 94,
+      "title": "Astrophysics for People in a Hurry",
+      "idBook": 94,
+      "firstName": "Neil",
+      "lastName": "Tyson"
+    },
+    {
+      "id": 95,
+      "title": "Cosmos",
+      "idBook": 95,
+      "firstName": "Carl",
+      "lastName": "Sagan"
+    },
+    {
+      "id": 96,
+      "title": "A Brief History of Time",
+      "idBook": 96,
+      "firstName": "Stephen",
+      "lastName": "Hawking"
+    },
+    {
+      "id": 97,
+      "title": "The Grand Design",
+      "idBook": 97,
+      "firstName": "Stephen",
+      "lastName": "Hawking"
+    },
+    {
+      "id": 98,
+      "title": "Brief Answers to the Big Questions",
+      "idBook": 98,
+      "firstName": "Stephen",
+      "lastName": "Hawking"
+    },
+    {
+      "id": 99,
+      "title": "The Order of Time",
+      "idBook": 99,
+      "firstName": "Carlo",
+      "lastName": "Rovelli"
+    },
+    {
+      "id": 100,
+      "title": "Seven Brief Lessons on Physics",
+      "idBook": 100,
+      "firstName": "Carlo",
+      "lastName": "Rovelli"
+    },
+    {
+      "id": 101,
+      "title": "The Body",
+      "idBook": 101,
+      "firstName": "Bill",
+      "lastName": "Bryson"
+    },
+    {
+      "id": 102,
+      "title": "A Short History of Nearly Everything",
+      "idBook": 102,
+      "firstName": "Bill",
+      "lastName": "Bryson"
     }
   ]
 }

@@ -1,18 +1,22 @@
 // thresholds.js
-import { Rate, Trend } from 'k6/metrics';
-const passRate200 = new Rate('Response_200');
-const failRate400 = new Rate('Response_400');
-const failRate500 = new Rate('Response_500');
-
-// thresholds.js
 export const thresholdsConfig = {
   load: {
     http_req_duration: ['p(95)<500'],
     http_req_failed: ['rate<0.01'],
+    // For the custom Trend metrics
+    Authors_GET_apis_duration: ['p(90)<500'],
+    Authors_POST_apis_duration: ['p(90)<500'],
+    Authors_PUT_apis_duration: ['p(90)<500'],
+    Authors_DELETE_apis_duration: ['p(90)<500'],
   },
   stress: {
     http_req_duration: ['p(99)<1000'],
     http_req_failed: ['rate<0.05'],
+    // For the custom Trend metrics
+    Authors_GET_apis_duration: ['p(90)<500'],
+    Authors_POST_apis_duration: ['p(90)<500'],
+    Authors_PUT_apis_duration: ['p(90)<500'],
+    Authors_DELETE_apis_duration: ['p(90)<500'],
   },
   soak: {
     http_req_duration: ['p(95)<300'],

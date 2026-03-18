@@ -14,16 +14,20 @@ import { scenariosConfig } from '../options/scenario.js';
 import { SharedArray } from 'k6/data';
 import { debugging, logging } from '../helper/common.js';
 import { Trend } from 'k6/metrics';
+import { environments } from '../helper/config.js';
 
 const post_responce = new Trend('post_responce');
 // Logic to pick which configuration to use
-const env = __ENV.url;
+const env = __ENV.env || 'perf';
 const testType = __ENV.TEST_TYPE || 'load';
 const debug = `${__ENV.debug}`;
 
 const data = new SharedArray('user data', function () {
   return JSON.parse(open('../test_data/authers.json')).authors;
 });
+
+//Select the config based on the envType
+const currentConfig = environments[env];
 
 // 2. Dynamically build the options object
 export const options = {
@@ -32,8 +36,6 @@ export const options = {
 };
 
 export default function () {
-  var baseURL = 'https://fakerestapi.azurewebsites.net';
-
   const authorsParams = {
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +59,7 @@ export default function () {
   console.log(authorPostBody);
   //Post method
 
-  let url = `${baseURL}/api/v1/Authors`;
+  let url = `${currentConfig.baseUrl}/api/v1/Authors`;
   let res = http.post(url, authorPostBody, authorsParams);
   post_responce.add(res.timings.duration);
 

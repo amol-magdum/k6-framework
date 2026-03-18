@@ -3,7 +3,7 @@
 
  GET method with searchparams is used in the following :
 
- Command : k6 run --vus 1 --iterations 1 .\GET_with_serach_params.js -e env=test_env -e debug=true -e targetRate=1 -e duration1=1s -e duration2=1s --http-debug="full" --log-format raw
+k6 run -e env=perf -e TEST_TYPE=smoke .\Test_Scripts\GET_serach_params.js
 
 ****************************************************************/
 import http from 'k6/http';
@@ -15,11 +15,12 @@ import { scenariosConfig } from '../options/scenario.js';
 import { SharedArray } from 'k6/data';
 import { debugging, logging } from '../helper/common.js';
 import { Trend } from 'k6/metrics';
+import { environments } from '../helper/config.js';
 
 const get_search_param = new Trend('get_search_param');
 
 // Logic to pick which configuration to use
-const env = __ENV.url;
+const env = __ENV.env || 'perf';
 const testType = __ENV.TEST_TYPE || 'load';
 const debug = `${__ENV.debug}`;
 
@@ -27,6 +28,9 @@ const debug = `${__ENV.debug}`;
 const data = new SharedArray('user data', function () {
   return JSON.parse(open('../test_data/authers.json')).authors;
 });
+
+//Select the config based on the envType
+const currentConfig = environments[env];
 
 // 2. Dynamically build the options object
 export const options = {
@@ -45,8 +49,7 @@ export default function () {
 
   //GET url
 
-  let url =
-    'https://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books';
+  let url = `${currentConfig.baseUrl}/api/v1/Authors/authors/books`;
   let res = http.get(`${url}/${idBook}`, params);
 
   get_search_param.add(res.timings.duration);
